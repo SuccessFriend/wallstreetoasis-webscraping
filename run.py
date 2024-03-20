@@ -175,9 +175,6 @@ print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 print(results)
 print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 
-# for row in text:
-#     results.append({'post_details': post_details, 'post_comments': result_post_comments})
-
 def set_default(obj):
     if isinstance(obj, set):
         return list(obj)
