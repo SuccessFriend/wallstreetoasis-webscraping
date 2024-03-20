@@ -103,7 +103,7 @@ with open('test.csv', mode='r') as file:
         
         print("post details >>> ", postID, postUrl, postTitle, upvoteCount, downvoteCount, postContent, createdDate, modifiedDate, audience, authorName, authorUrl, authorAvatar, memberRanking, bananaPoints, industryTitle, region, totalCommentCnt, displayedCommentCnt)
 
-        post_details.append({postID, postUrl, postTitle, upvoteCount, downvoteCount, postContent, createdDate, modifiedDate, audience, authorName, authorUrl, authorAvatar, memberRanking, bananaPoints, industryTitle, region, totalCommentCnt, displayedCommentCnt })
+        post_details.append({'postID':postID, 'postUrl':postUrl, 'postTitle':postTitle, 'upvoteCount':upvoteCount, 'downvoteCount':downvoteCount, 'postContent':postContent, 'createdDate':createdDate, 'modifiedDate':modifiedDate, 'audience':audience, 'authorName':authorName, 'authorUrl':authorUrl, 'authorAvatar':authorAvatar, 'memberRanking':memberRanking, 'bananaPoints':bananaPoints, 'industryTitle':industryTitle, 'region':region, 'totalCommentCnt':totalCommentCnt, 'displayedCommentCnt':displayedCommentCnt })
 
         try:
             post_comments = driver.find_elements(By.CLASS_NAME, 'comment-forum-wrapper')[0]
@@ -163,21 +163,28 @@ with open('test.csv', mode='r') as file:
                 
                 print("post comments >>> ", position, commentId, parentId, contentText, contentHtml, authorName, authorId, authorRanking, comment_bananaPoints, comment_time, labels, comment_upvoteCount, comment_downvoteCount)
 
-                result_post_comments.append({position, commentId, parentId, contentText, contentHtml, authorName, authorId, authorRanking, comment_bananaPoints, comment_time, labels, comment_upvoteCount, comment_downvoteCount})
+                result_post_comments.append({'position':position, 'commentId':commentId, 'parentId':parentId, 'contentText':contentText, 'contentHtml':contentHtml, 'authorName':authorName, 'authorId':authorId, 'authorRanking':authorRanking, 'comment bananaPoints':comment_bananaPoints, 'comment time':comment_time, 'labels':labels, 'comment upvoteCount':comment_upvoteCount, 'comment downvoteCount':comment_downvoteCount})
 
         except:
             pass
         
-        results.append({'post_details': post_details, 'post_comments': result_post_comments})
+        results.append({'post details': post_details, 'post comments': result_post_comments})
         print("-----------------------------------------------------------------------------------------")
 
 print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 print(results)
 print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
 
-write_data = {'results':results}
+# for row in text:
+#     results.append({'post_details': post_details, 'post_comments': result_post_comments})
 
-with open("result.json", 'w') as json_file:
-    json.dump(write_data, json_file, indent=4)
+def set_default(obj):
+    if isinstance(obj, set):
+        return list(obj)
+    raise TypeError
 
+write_data = json.dumps(results, default=set_default, indent=4)
+
+with open('result.json', 'w') as my_file:
+    my_file.write(write_data)
         
